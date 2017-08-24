@@ -30,8 +30,8 @@ $( document ).ready(function() {
     	$(name).on('keyup blur', function() {
     		if (isValidName(this.value)) {
     			$(this).removeClass("needs-attention");
-    			$("#name-tip").hide();
-    			$("#name-error").hide();
+    			$("#name-tip").toggle(false);
+    			$("#name-error").toggle(false);
     			nameIsValid = true;
     		}
     	});
@@ -44,13 +44,13 @@ $( document ).ready(function() {
    				$(this).addClass("needs-attention");
    				$(this).attr("placeholder", "Please enter your name");
    				nameIsValid = false;
-   				$("#name-tip").hide();
+   				$("#name-tip").toggle(false);
    				stopper = 0;
 
    			}
 
    			else if (isValidName(this.value)) {
-   				$("#name-tip").hide();
+   				$("#name-tip").toggle(false);
    				$(this).removeClass("needs-attention");
    				nameIsValid = true;
    			}
@@ -80,8 +80,8 @@ $( document ).ready(function() {
     	$(mail).on('keyup blur', function() {
     		if (isValidEmailAddress(this.value)) {
     			$(mail).removeClass("needs-attention");
-    			$("#email-tip").hide();
-    			$("#mail-error").hide();
+    			$("#email-tip").toggle(false);
+    			$("#mail-error").toggle(false);
     			mailIsValid = true;
     		}
     	});
@@ -95,7 +95,7 @@ $( document ).ready(function() {
    				$(this).attr("placeholder", "Please enter your e-mail address");
    				
    				//Hide mail tip if it's already there
-   				$("#email-tip").hide();
+   				$("#email-tip").toggle(false);
    				mailIsValid = false;
    				stopper = 0;
    			} 
@@ -103,7 +103,7 @@ $( document ).ready(function() {
    			// Check if email format is valid
    			else if( isValidEmailAddress( this.value ) ) { 
    				$(mail).removeClass("needs-attention");
-   				$("#email-tip").hide();
+   				$("#email-tip").toggle(false);
    			 }
 
    			else if (stopper < 1) {
@@ -137,8 +137,8 @@ $( document ).ready(function() {
 
 		$('#design').change(function() {
 
-			$('label[for="color"]').show();
-			$('#color').show();
+			$('label[for="color"]').toggle(true);
+			$('#color').toggle(true);
 
 			// If the user selects "Theme - JS Puns" then the color menu should only 
 			// display "Cornflower Blue," "Dark Slate Grey," and "Gold."
@@ -175,7 +175,7 @@ $( document ).ready(function() {
 		$('.activities input[name="all"]').parent().change(function() {
 			if (this.firstChild.checked) {
 				// Hide checkbox error message if it exists
-				$("#checkbox-error").hide();
+				$("#checkbox-error").toggle(false);
 				$(activities).removeClass("needs-attention");
 				// Add $200 to tracker
 				tracker += 200;
@@ -195,7 +195,7 @@ $( document ).ready(function() {
 				// Disable Express Worshop Field
 				$('.activities input[name="express"]').parent().addClass("disabled");
 				$('.activities input[name="express"]').attr("disabled", true);
-				$("#checkbox-error").hide();
+				$("#checkbox-error").toggle(false);
 				$(activities).removeClass("needs-attention");
 				tracker += 100;
 				totalCost.textContent = "Total: $" + tracker;
@@ -214,7 +214,7 @@ $( document ).ready(function() {
 				// Disable Node Worshop Field
 				$('.activities input[name="node"]').parent().addClass("disabled");
 				$('.activities input[name="node"]').attr("disabled", true);
-				$("#checkbox-error").hide();
+				$("#checkbox-error").toggle(false);
 				$(activities).removeClass("needs-attention");
 				tracker += 100;
 				totalCost.textContent = "Total: $" + tracker;
@@ -232,7 +232,7 @@ $( document ).ready(function() {
 				// Disable js-frameworks Field
 				$('.activities input[name="js-frameworks"]').parent().addClass("disabled");
 				$('.activities input[name="js-frameworks"]').attr("disabled", true);
-				$("#checkbox-error").hide();
+				$("#checkbox-error").toggle(false);
 				$(activities).removeClass("needs-attention");
 				tracker += 100;
 				totalCost.textContent = "Total: $" + tracker;
@@ -250,7 +250,7 @@ $( document ).ready(function() {
 				// Disable js-libs Field
 				$('.activities input[name="js-libs"]').parent().addClass("disabled");
 				$('.activities input[name="js-libs"]').attr("disabled", true);
-				$("#checkbox-error").hide();
+				$("#checkbox-error").toggle(false);
 				$(activities).removeClass("needs-attention");
 				tracker += 100;
 				totalCost.textContent = "Total: $" + tracker;
@@ -265,7 +265,7 @@ $( document ).ready(function() {
 
 		$('.activities input[name="build-tools"]').parent().change(function() {
 			if (this.firstChild.checked) {
-				$("#checkbox-error").hide();
+				$("#checkbox-error").toggle(false);
 				$(activities).removeClass("needs-attention");
 				tracker += 100;
 				totalCost.textContent = "Total: $" + tracker;
@@ -277,7 +277,7 @@ $( document ).ready(function() {
 
 		$('.activities input[name="npm"]').parent().change(function() {
 			if (this.firstChild.checked) {
-				$("#checkbox-error").hide();
+				$("#checkbox-error").toggle(false);
 				$(activities).removeClass("needs-attention");
 				tracker += 100;
 				totalCost.textContent = "Total: $" + tracker;
@@ -289,43 +289,41 @@ $( document ).ready(function() {
 	}
 
 	function paymentType() {
+	
 
-		// Automatically set Credit Card as the default option
-		$('#payment option[value="credit card"]').attr("selected", "selected");
-
-		const creditCard = $('#credit-card').show();
-		const payPal = $('#paypal').hide();
-		const bitCoin = $('#bitcoin').hide();
+		const creditCard = $('#credit-card').toggle(true);
+		const payPal = $('#paypal').toggle(false);
+		const bitCoin = $('#bitcoin').toggle(false);
 
 
 		$('#payment').change(function() {
 			
 			if ($( "#payment option:selected" ).text() === "Credit Card") {
-				$(creditCard).show();
-				$(payPal).hide();
-				$(bitCoin).hide();
+				$(creditCard).toggle(true);
+				$(payPal).toggle(false);
+				$(bitCoin).toggle(false);
 			}
 
 			if ($( "#payment option:selected" ).text() === "PayPal") {
-				$("#payment-error").hide();
-				$("#ccNum-error").hide();
-				$("#zipCode-error").hide();
-				$("#cvv-error").hide();
-				$(payPal).show();
-				$(creditCard).hide();
-				$(bitCoin).hide();
+				$("#payment-error").toggle(false);
+				$("#ccNum-error").toggle(false);
+				$("#zipCode-error").toggle(false);
+				$("#cvv-error").toggle(false);
+				$(payPal).toggle(true);
+				$(creditCard).toggle(false);
+				$(bitCoin).toggle(false);
 				// Nullifies having invalid credit card info if a user selects PayPal after first selecting Credit Card
 				paymentIsValid = true;
 			}
 
 			if ($( "#payment option:selected" ).text() === "Bitcoin") {
-				$("#payment-error").hide();
-				$("#ccNum-error").hide();
-				$("#zipCode-error").hide();
-				$("#cvv-error").hide();
-				$(bitCoin).show();
-				$(creditCard).hide();
-				$(payPal).hide();
+				$("#payment-error").toggle(false);
+				$("#ccNum-error").toggle(false);
+				$("#zipCode-error").toggle(false);
+				$("#cvv-error").toggle(false);
+				$(bitCoin).toggle(true);
+				$(creditCard).toggle(false);
+				$(payPal).toggle(false);
 				// Nullifies having invalid credit card info if a user selects Bitcoin after first selecting Credit Card
 				paymentIsValid = true;
 			}
@@ -336,10 +334,10 @@ $( document ).ready(function() {
 
 		$("#payment").on('keyup blur', function() {
     		if (paymentIsValid) {
-    			$("#payment-error").hide();
-    			$("#ccNum-tip").hide();
-    			$("#zipCode-tip").hide();
-    			$("#cvv-tip").hide();
+    			$("#payment-error").toggle(false);
+    			$("#ccNum-tip").toggle(false);
+    			$("#zipCode-tip").toggle(false);
+    			$("#cvv-tip").toggle(false);
     		}
     	});
 
@@ -352,8 +350,8 @@ $( document ).ready(function() {
 	   			// Check if credit card number is an integer and the correct amount of digits	
 				if ((this.value.length >= 13) && (this.value.length <= 16) && (this.value % 1 === 0)) {
 					$(this).removeClass("needs-attention");
-					$("#ccNum-tip").hide();
-					$("#ccNum-error").hide();
+					$("#ccNum-tip").toggle(false);
+					$("#ccNum-error").toggle(false);
 		   			ccNumIsValid = true;
 				} else {
 					console.log(this.value.length);
@@ -369,8 +367,8 @@ $( document ).ready(function() {
 				// Check if zip code is an integer and the correct amount of digits	
 	   			if ((this.value.length === 5) && (this.value % 1 === 0)) {
 					$(this).removeClass("needs-attention");
-					$("#zipCode-tip").hide();
-					$("#zipCode-error").hide();
+					$("#zipCode-tip").toggle(false);
+					$("#zipCode-error").toggle(false);
 		   			zipCodeIsValid = true;
 	   			} else {
 	   				$(this).addClass("needs-attention");
@@ -384,8 +382,8 @@ $( document ).ready(function() {
 	   			// Check if CVV is the correct amount of digits	and an integer
 	   			if ((this.value.length === 3) && (this.value % 1 === 0)) {
 					$(this).removeClass("needs-attention");
-					$("#cvv-tip").hide();
-					$("#cvv-error").hide();
+					$("#cvv-tip").toggle(false);
+					$("#cvv-error").toggle(false);
 		   			cvvIsValid = true;
 		   		} else {
 					$(this).addClass("needs-attention");
@@ -437,39 +435,43 @@ $( document ).ready(function() {
 				paymentIsValid = true;
 			} 
 
+			if ($( "#payment option:selected" ).text() === "Credit Card") {
 
-			if (ccNumIsValid === false) {
-    			$(ccNum).addClass("needs-attention");
-    			e.preventDefault();
-    			//Keep mail error message from being appended more than once
-    			if (!($("#ccNum-error").length)) {
+				if (ccNumIsValid === false) {
     				$(ccNum).addClass("needs-attention");
-    				// Append mail error message
-    				$('button').before("<div id='ccNum-error' style='color:red;margin-top: 5px;'>Please enter a valid credit card number.</div>"); 
+    				e.preventDefault();
+    				//Keep mail error message from being appended more than once
+	    			if (!($("#ccNum-error").length)) {
+	    				$(ccNum).addClass("needs-attention");
+	    				// Append mail error message
+	    				$('button').before("<div id='ccNum-error' style='color:red;margin-top: 5px;'>Please enter a valid credit card number.</div>"); 
+    
+	    			}
     			}
-    		}
+    		
 
-    		if (zipCodeIsValid === false) {
-    			$(zipCode).addClass("needs-attention");
-    			e.preventDefault();
-    			//Keep mail error message from being appended more than once
-    			if (!($("#zipCode-error").length)) {
-    				$(zipCode).addClass("needs-attention");
-    				// Append mail error message
-    				$('button').before("<div id='zipCode-error' style='color:red;margin-top: 5px;'>Please enter a 5-digit zip code.</div>"); 
-    			}
-    		}
+	    		if (zipCodeIsValid === false) {
+	    			$(zipCode).addClass("needs-attention");
+	    			e.preventDefault();
+	    			//Keep mail error message from being appended more than once
+	    			if (!($("#zipCode-error").length)) {
+	    				$(zipCode).addClass("needs-attention");
+	    				// Append mail error message
+	    				$('button').before("<div id='zipCode-error' style='color:red;margin-top: 5px;'>Please enter a 5-digit zip code.</div>"); 
+	    			}
+	    		}
 
-    		if (cvvIsValid === false) {
-    			$(cvv).addClass("needs-attention");
-    			e.preventDefault();
-    			//Keep mail error message from being appended more than once
-    			if (!($("#cvv-error").length)) {
-    				$(cvv).addClass("needs-attention");
-    				// Append mail error message
-    				$('button').before("<div id='cvv-error' style='color:red;margin-top: 5px;'>Please enter a 3-digit CVV number.</div>"); 
-    			}
-    		}
+	    		if (cvvIsValid === false) {
+	    			$(cvv).addClass("needs-attention");
+	    			e.preventDefault();
+	    			//Keep mail error message from being appended more than once
+	    			if (!($("#cvv-error").length)) {
+	    				$(cvv).addClass("needs-attention");
+	    				// Append mail error message
+	    				$('button').before("<div id='cvv-error' style='color:red;margin-top: 5px;'>Please enter a 3-digit CVV number.</div>"); 
+	    			}
+	    		}
+			}
 		});
     }
 
@@ -483,12 +485,15 @@ $( document ).ready(function() {
 	otherJob();
 
 	// Hide default color menu & label
-	$('label[for="color"]').hide();
-	$('#color').hide();
+	$('label[for="color"]').toggle(false);
+	$('#color').toggle(false);
 
 	tShirtColor();
 
 	registerForActivities();
+
+	// Automatically set Credit Card as the default option
+	$('#payment').val("credit card");
 
 	paymentType();
 
