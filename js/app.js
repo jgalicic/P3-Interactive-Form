@@ -122,12 +122,11 @@ $( document ).ready(function() {
 		let stopper = 0;
 
 		$('#title').change(function() {
+
+
 			
 			if (($( "#title option:selected" ).text() === "Other") && (stopper === 0)) {
-				const titleInput = document.createElement('input');
-				$(titleInput).attr("id", "other-title");
-				$(titleInput).attr("placeholder", "Your Job Role");
-				$('#titleInput').append(titleInput);
+				$("#titleInput").toggle(true);
 				stopper = 1;
 			}
 		});
@@ -481,6 +480,8 @@ $( document ).ready(function() {
 	checkName();
 
 	checkMail();
+
+	$("#titleInput").toggle(false);
 
 	otherJob();
 
